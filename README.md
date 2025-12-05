@@ -21,7 +21,18 @@ It does **not** include any business logic – it's meant as a clean starting po
     - Events: `message.channels`, `reaction_added`
 - Setup a free [Ngrok account](https://ngrok.com/pricing) to expose the bot to the world.
 
-# Running the Application
+# Runtime Environment Configuration
+
+This scaffold uses a single environment variable, `RUNTIME_ENVIRONMENT_TYPE`, to determine how the bot loads secrets and what safety rules apply.
+This ensures a clean separation between local development and deployable environments.
+
+| Value            | Description                               | Allowed Secret Source        |
+|------------------|-------------------------------------------|-------------------------------|
+| development      | Local development on a laptop             | `.env` file                   |
+| non-production   | Staging, preview, sandbox environments    | Environment variables only    |
+| production       | Production deployments                    | Environment variables only    |
+
+# Running the Application Locally
 
 ## From code
 
@@ -42,3 +53,10 @@ It does **not** include any business logic – it's meant as a clean starting po
 
 - Start the bot
 `uvicorn main:app --reload --host 0.0.0.0 --port 8000`
+
+## From a container
+
+- Run ngrok (see above)
+
+- Docker run
+`docker run --rm -e PORT=8000 -p 8000:8000 --env-file .env stock-slackbot-scaffold`
