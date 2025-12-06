@@ -32,20 +32,19 @@ This ensures a clean separation between local development and deployable environ
 | non-production   | Staging, preview, sandbox environments    | Environment variables only    |
 | production       | Production deployments                    | Environment variables only    |
 
-# Running the Application Locally
+## 🚀 Running the Slack Bot
 
-## From code
+### 🧪 Local Development
 
 - Clone this repository
 - Create a new virtualenv `python -m ~/path/to/stock-slackbot-scafofld`
 - Activate virtualenv `source bin ~/path/to/stock-slackbot-scafofld/bin/activate`
 - Install pre-requisites `pip install -r requirements.txt`
-- Create a .env file (`touch .env`) in the root directory and populate the following fields:
+- For local testing, create a .env file (`touch .env`) in the root directory and populate the following fields:
     - SLACK_BOT_TOKEN
     - SLACK_SIGNING_SECRET
     - SLACK_CLIENT_ID
     - SLACK_CLIENT_SECRET
-    - SLACK_REDIRECT_URI
     - SLACK_BOT_USER_ID
 
 - Expose it to the world
@@ -56,7 +55,14 @@ This ensures a clean separation between local development and deployable environ
 
 ## From a container
 
-- Run ngrok (see above)
+> **Reminder**: Start ngrok (see above)
 
 - Docker run
-`docker run --rm -e PORT=8000 -p 8000:8000 --env-file .env stock-slackbot-scaffold`
+```
+docker run -e SLACK_BOT_TOKEN=your-slack-bot-token \
+  -e SLACK_SIGNING_SECRET=your-signing-secret \
+  -e SLACK_CLIENT_ID=your-client-id \
+  -e SLACK_CLIENT_SECRET=your-client-secret \
+  -p 8000:8000 \
+  talaniz/stock-slackbot-scaffold:latest
+  ```
